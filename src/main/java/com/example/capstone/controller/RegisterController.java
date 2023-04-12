@@ -1,7 +1,7 @@
 package com.example.capstone.controller;
 
 import com.example.capstone.domain.User;
-import com.example.capstone.domain.UserValidatefDuplicate;
+import com.example.capstone.domain.UserValidateDuplicate;
 import com.example.capstone.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,25 +20,27 @@ public class RegisterController {
     }
 
     //중복확인     구현 중
-    @PostMapping("/validatefDuplicate")
-    public ResponseEntity<String> ValidatefDuplicate(@RequestBody UserValidatefDuplicate userValidatefDuplicate) {
-        String username = userValidatefDuplicate.getUsername();
+    @PostMapping("/validateDuplicate")
+    public ResponseEntity<String> ValidateDuplicate(@RequestBody UserValidateDuplicate userValidateDuplicate) {
+        String username = userValidateDuplicate.getUsername();
 
-        boolean result = userService.validatefDuplicateUser(username);
-        if (result) {    // true시 username 이 있다는 소리로 중복됨을 처리해야함
-            return ResponseEntity.ok("success");   // 중복
+        boolean result = userService.validateDuplicateUser(username);
+        if (result == false) {    // true시 username 이 있다는 소리로 중복됨을 처리해야함
+            return ResponseEntity.ok("DuplicateCheck");   // 중복X
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();  // 중복X
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();  // 중복
         }
     }
 
+    // 회원가입
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody User user) {
+        boolean success = userService.join(user);
+        if (success) {
+            return ResponseEntity.ok().body("success");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
-    //회원가입    구현 못함
-//    @PostMapping("/register")
-//    public ResponseEntity<String> join(@RequestBody User user) {
-//        String username = user.getUsername();
-//        String password = user.getPassword();
-//        String name = user.getName();
-//
-//    }
 }

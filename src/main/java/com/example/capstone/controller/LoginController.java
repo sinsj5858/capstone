@@ -28,7 +28,9 @@ public class LoginController {
 
         boolean success = userService.login(username,password);
         if (success) {
-            System.out.println("success");
+            if (username.equals("admin")){
+                return ResponseEntity.ok().body("admin");
+            }
             return ResponseEntity.ok().body("success");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

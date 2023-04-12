@@ -1,6 +1,6 @@
 package com.example.capstone.domain;
 
-public class UserValidatefDuplicate {
+public class UserValidateDuplicate {
     private String username;
 
     public String getUsername() {
