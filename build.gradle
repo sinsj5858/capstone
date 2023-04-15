@@ -20,6 +20,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	// h2
 	runtimeOnly 'com.h2database:h2'
+	//mysql
+//	implementation 'mysql:mysql-connector-java:8.0.31'
 }
 
 tasks.named('test') {

@@ -2,6 +2,7 @@ package com.example.capstone.service;
 
 import com.example.capstone.domain.User;
 import com.example.capstone.exception.ResourceNotFoundException;
+import com.example.capstone.repository.UserJpaRepository;
 import com.example.capstone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
 @Transactional
 public class UserService {
 
@@ -17,44 +17,37 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
-    public User updateUser(Long userId, User user) {
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-
-        existingUser.setName(user.getUsername());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setName(user.getName());
-
-        return userRepository.save(existingUser);
-    }
-
-    public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-
-        userRepository.delete(user);
-    }
-
-
-    // 로그인 기능
-//    public Boolean login(String username, String password) {
-//        Optional<User> user = userRepository.findByUsername(username);
-//
-//        if (user.isPresent() && user.get().getPassword().equals(password)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
+//    public User getUserById(Long userId) {
+//        return userRepository.findById(userId)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 //    }
+//
+//    public User createUser(User user) {
+//        return userRepository.save(user);
+//    }
+//
+//    public User updateUser(Long userId, User user) {
+//        User existingUser = userRepository.findById(userId)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+//
+//        existingUser.setName(user.getUsername());
+//        existingUser.setPassword(user.getPassword());
+//        existingUser.setName(user.getName());
+//
+//        return userRepository.save(existingUser);
+//    }
+
+//    public void deleteUser(Long userId) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+//
+//        userRepository.delete(user);
+//    }
+
+
     public boolean login(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
 
