@@ -35,8 +35,7 @@ public class RegisterController {
     // 회원가입
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        boolean success = userService.join(user);
-        if (success) {
+        if (userService.join(user)) {
             return ResponseEntity.ok().body("success");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
