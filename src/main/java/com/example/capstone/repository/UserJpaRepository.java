@@ -1,15 +1,14 @@
 package com.example.capstone.repository;
 
-import com.example.capstone.domain.User;
+import com.example.capstone.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
-public interface UserJpaRepository extends JpaRepository<User, Long> ,UserRepository {
+public interface UserJpaRepository extends JpaRepository<Users, Long> ,UserRepository {
     @Override
-    Optional<User> findByName(String name); // 사용자 이름으로 검색
+    Optional<Users> findByName(String name); // 사용자 이름으로 검색
     @Override
-    Optional<User> findByUsername(String username);
+    Optional<Users> findByUsername(String username);
 
 }

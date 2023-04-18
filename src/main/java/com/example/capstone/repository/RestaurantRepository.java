@@ -1,7 +1,6 @@
 package com.example.capstone.repository;
 
 import com.example.capstone.domain.Restaurant;
-import com.example.capstone.domain.RestaurantMenu;
 
 import java.util.List;
 import java.util.Optional;

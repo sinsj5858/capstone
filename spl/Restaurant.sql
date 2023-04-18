@@ -1,4 +1,4 @@
-drop table if exists user CASCADE;
+drop table if exists users CASCADE;
 CREATE TABLE restaurant(
                         restaurant_id INT AUTO_INCREMENT,
                         restaurant_img_url VARCHAR(255) NOT NULL,

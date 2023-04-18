@@ -1,6 +1,6 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.domain.User;
+import com.example.capstone.domain.Users;
 import com.example.capstone.domain.UserValidateDuplicate;
 import com.example.capstone.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -34,8 +34,8 @@ public class RegisterController {
 
     // 회원가입
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        if (userService.join(user)) {
+    public ResponseEntity<String> register(@RequestBody Users users) {
+        if (userService.join(users)) {
             return ResponseEntity.ok().body("success");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

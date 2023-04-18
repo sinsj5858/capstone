@@ -1,7 +1,6 @@
 package com.example.capstone.controller;
 
 import com.example.capstone.domain.LoginRequest;
-import com.example.capstone.domain.User;
 import com.example.capstone.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
-
+        System.out.println(username);
         boolean success = userService.login(username,password);
         if (success) {
             if (username.equals("admin")){

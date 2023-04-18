@@ -1,8 +1,5 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.domain.User;
-import com.example.capstone.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

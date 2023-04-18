@@ -6,11 +6,10 @@ import java.util.List;
 
 // Retrofit을 통해 가져올 데이터 (이미지 제외 이미지는 따로 처리)
 public class GetRestaurant {
-    private MultipartFile restaurantImg; // 식당 이미지
     private String restaurantName;   // 식당이름 정보
     private String restaurantLocation;// 식당 위치 정보
     private String restaurantOperatingTime; // 운영시간 정보
-    private List<GetRestaurantMenu> menuList; // 추가할메뉴리스트 저장시 위에 값들만 저장
+    private List<GetMenu> menuList; // 추가할메뉴리스트 저장시 위에 값들만 저장
 
     public String getRestaurantName() {
         return restaurantName;
@@ -35,20 +34,11 @@ public class GetRestaurant {
     public void setRestaurantOperatingTime(String restaurantOperatingTime) {
         this.restaurantOperatingTime = restaurantOperatingTime;
     }
-
-
-    public MultipartFile getRestaurantImg() {
-        return restaurantImg;
-    }
-
-    public void setRestaurantImg(MultipartFile restaurantImg) {
-        this.restaurantImg = restaurantImg;
-    }
-    public List<GetRestaurantMenu> getMenuList() {
+    public List<GetMenu> getMenuList() {
         return menuList;
     }
 
-    public void setMenuList(List<GetRestaurantMenu> menuList) {
+    public void setMenuList(List<GetMenu> menuList) {
         this.menuList = menuList;
     }
 }
