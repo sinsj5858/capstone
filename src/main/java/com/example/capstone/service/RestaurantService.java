@@ -89,7 +89,7 @@ public class RestaurantService {
         log.debug("debug log={}", "imgSave메소드");
         String fileName = StringUtils.cleanPath(img.getOriginalFilename());
         String fileDirectory = "C:/Users/goddn/capstoneImg" + restaurantName; // 식당 이름을 디렉토리 이름으로 사용
-        String filePath = fileDirectory + "/" + fileName;
+        String filePath = fileDirectory + "/" + fileName; // DB에 저장될 이미지파일의 최종주소
         try {
             // 디렉토리가 존재하지 않으면 생성
             Files.createDirectories(Paths.get(fileDirectory));
