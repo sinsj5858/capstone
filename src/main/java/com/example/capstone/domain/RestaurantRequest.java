@@ -1,11 +1,9 @@
 package com.example.capstone.domain;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 // Retrofit을 통해 가져올 데이터 (이미지 제외 이미지는 따로 처리)
-public class GetRestaurant {
+public class RestaurantRequest {
     private String restaurantName;   // 식당이름 정보
     private String restaurantLocation;// 식당 위치 정보
     private String restaurantOperatingTime; // 운영시간 정보

@@ -1,5 +1,6 @@
 package com.example.capstone;
 
+import com.example.capstone.repository.MenuRepository;
 import com.example.capstone.repository.RestaurantJpaRepository;
 import com.example.capstone.repository.RestaurantRepository;
 import com.example.capstone.repository.UserJpaRepository;
@@ -13,11 +14,12 @@ import org.springframework.context.annotation.Configuration;
 public class SpringConfig {
     private final UserJpaRepository userJpaRepository;
     private final RestaurantJpaRepository restaurantJpaRepository;
-
+    private final MenuRepository menuRepository;
     @Autowired  //객체하나일때는 생략가능
-    public SpringConfig(UserJpaRepository userJpaRepository,RestaurantJpaRepository restaurantJpaRepository) {
+    public SpringConfig(UserJpaRepository userJpaRepository,RestaurantJpaRepository restaurantJpaRepository,MenuRepository menuRepository) {
         this.userJpaRepository = userJpaRepository;
         this.restaurantJpaRepository = restaurantJpaRepository;
+        this.menuRepository =menuRepository;
     }
 
     @Bean
@@ -25,7 +27,7 @@ public class SpringConfig {
         return new UserService(userJpaRepository);
     }
     @Bean
-    public RestaurantService restaurantService(){return new RestaurantService(restaurantJpaRepository);}
+    public RestaurantService restaurantService(){return new RestaurantService(restaurantJpaRepository, menuRepository);}
 
 
 }

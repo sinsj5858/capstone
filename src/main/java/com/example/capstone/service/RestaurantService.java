@@ -1,51 +1,43 @@
 package com.example.capstone.service;
 
 import com.example.capstone.domain.GetMenu;
-import com.example.capstone.domain.GetRestaurant;
+import com.example.capstone.domain.RestaurantRequest;
 import com.example.capstone.domain.Restaurant;
 import com.example.capstone.domain.Menu;
 import com.example.capstone.repository.MenuRepository;
 import com.example.capstone.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Transactional
 public class RestaurantService {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private RestaurantRepository restaurantRepository;
-    public RestaurantService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
     private MenuRepository menuRepository;
-    public RestaurantService(MenuRepository menuRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository,MenuRepository menuRepository) {
+        this.restaurantRepository = restaurantRepository;
         this.menuRepository = menuRepository;
     }
-
     //식당 + 메뉴 등록
-    public boolean RestaurantRegister(GetRestaurant getRestaurant, MultipartFile restaurantImg, List<MultipartFile> menuImgList)throws IOException{
+    public boolean RestaurantRegister(RestaurantRequest restaurantRequest, MultipartFile restaurantImg, List<MultipartFile> menuImgList)throws IOException{
         log.debug("debug log={}", "RestaurantRegister메소드");
-        if(validateDuplicateRestaurant(getRestaurant.getRestaurantName())) //식당 중복검증
+        if(validateDuplicateRestaurant(restaurantRequest.getRestaurantName())) //식당 중복검증
             return false;
         // 식당 저장 객체
         Restaurant restaurant = new Restaurant();
-        restaurant.setRestaurantImgUrl(imgSave(restaurantImg,getRestaurant.getRestaurantName())); // 식당이미지 저장 및 url변환
-        restaurant.setRestaurantName(getRestaurant.getRestaurantName());
-        restaurant.setRestaurantLocation(getRestaurant.getRestaurantLocation());
-        restaurant.setRestaurantOperatingTime(getRestaurant.getRestaurantOperatingTime());
+        restaurant.setRestaurantImgUrl(imgSave(restaurantImg, restaurantRequest.getRestaurantName())); // 식당이미지 저장 및 url변환
+        restaurant.setRestaurantName(restaurantRequest.getRestaurantName());
+        restaurant.setRestaurantLocation(restaurantRequest.getRestaurantLocation());
+        restaurant.setRestaurantOperatingTime(restaurantRequest.getRestaurantOperatingTime());
         Restaurant restaurant1 = restaurantRepository.save(restaurant);
 
         /*
@@ -53,7 +45,7 @@ public class RestaurantService {
         메뉴 등록 구현 List<restaurantMenu>  완료
         */
         Long restaurantId = restaurant1.getRestaurantId();
-        List<GetMenu> menuList = getRestaurant.getMenuList();
+        List<GetMenu> menuList = restaurantRequest.getMenuList();
 
         // menuList,imgList 크기만큼 반복
         int count = menuList.size();
@@ -88,7 +80,7 @@ public class RestaurantService {
     public String imgSave(MultipartFile img,String restaurantName) throws IOException {
         log.debug("debug log={}", "imgSave메소드");
         String fileName = StringUtils.cleanPath(img.getOriginalFilename());
-        String fileDirectory = "C:/Users/goddn/capstoneImg" + restaurantName; // 식당 이름을 디렉토리 이름으로 사용
+        String fileDirectory = "C:/Users/goddn/capstoneImg/" + restaurantName; // 식당 이름을 디렉토리 이름으로 사용
         String filePath = fileDirectory + "/" + fileName; // DB에 저장될 이미지파일의 최종주소
         try {
             // 디렉토리가 존재하지 않으면 생성
