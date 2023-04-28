@@ -8,13 +8,18 @@ import com.example.capstone.repository.MenuRepository;
 import com.example.capstone.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -97,5 +102,31 @@ public class RestaurantService {
         String imageUrl = filePath;
         log.debug("debug log={}", "imgSave저장완료");
         return imageUrl;
+    }
+
+    public Map<String, Object> getImgListAndRestaurantNameList()throws IOException{
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        List<String> imageUrlList = new ArrayList<>();
+        List<String> restaurantNameList = new ArrayList<>();
+
+        // 식당객체에서 필요한 태용 추출
+        for (Restaurant restaurant : restaurantList) {
+            restaurantNameList.add(restaurant.getRestaurantName());
+            imageUrlList.add(restaurant.getRestaurantImgUrl());
+        }
+        // 이미지 리스트
+        List<String> imageList = new ArrayList<>();
+        // 이미지 byte 변환후 Sting으로 인코딩 후 리스트에 저장
+        for (String imageUrl : imageUrlList) {
+            File imageFile = new File(imageUrl);
+            byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
+            String imageData = Base64.getEncoder().encodeToString(imageBytes);
+            imageList.add(imageData);
+        }
+        // 보낼정보 map에 저장
+        Map<String, Object> data = new HashMap<>();
+        data.put("imageList", imageList);
+        data.put("restaurantNameList", restaurantNameList);
+        return data;
     }
 }

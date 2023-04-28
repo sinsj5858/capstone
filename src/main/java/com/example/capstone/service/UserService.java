@@ -1,6 +1,6 @@
 package com.example.capstone.service;
 
-import com.example.capstone.domain.Users;
+import com.example.capstone.domain.User;
 import com.example.capstone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,7 @@ public class UserService {
 
 
     public boolean login(String username, String password) {
-        Optional<Users> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         System.out.println(user.get().getUsername());
         if (user.isPresent() && user.get().getPassword().equals(password)) {
             return true;  //로그인 성공
@@ -56,15 +56,15 @@ public class UserService {
     }
 
     //회원가입 기능     구현 못함
-    public boolean join(Users users) { //회원가입
-        if(validateDuplicateUser(users.getUsername())) //중복회원검증
+    public boolean join(User user) { //회원가입
+        if(validateDuplicateUser(user.getUsername())) //중복회원검증
             return false;
-        userRepository.save(users);
+        userRepository.save(user);
         return true;
     }
 
     public Boolean validateDuplicateUser(String username) {  ///중복회원검증
-        Optional<Users> user1 = userRepository.findByUsername(username);
+        Optional<User> user1 = userRepository.findByUsername(username);
         System.out.println(user1.isPresent());
         if(user1.isPresent()){
             return true;  // 중복
