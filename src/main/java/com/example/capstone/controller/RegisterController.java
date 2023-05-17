@@ -36,6 +36,7 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
         if (userService.join(user)) {
+            System.out.println("Register Success ID: "+user.getUsername()+" Name : "+user.getName());
             return ResponseEntity.ok().body("success");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

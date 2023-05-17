@@ -12,6 +12,8 @@ public interface RestaurantRepository {
     Optional<Restaurant> findByRestaurantName(String restaurantName);
     Optional<Restaurant> findByRestaurantLocation(String restaurantLocation);
     Optional<Restaurant> findByRestaurantOperatingTime(String operatingTime);
+    Optional<Restaurant> findByRestaurantCategory(String restaurantCategory);
+    List<Restaurant> findByRestaurantNameContaining(String restaurantName);
     List<Restaurant> findAll();
 
 }

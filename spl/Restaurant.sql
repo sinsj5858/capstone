@@ -5,6 +5,7 @@ CREATE TABLE restaurant(
                         restaurant_name VARCHAR(255) NOT NULL,
                         restaurant_location VARCHAR(255) NOT NULL,
                         restaurant_operating_time VARCHAR(255),
+                        restaurant_category VARCHAR(255),
                         PRIMARY KEY (restaurant_id)
                      )
 CREATE TABLE menu(

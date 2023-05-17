@@ -24,9 +24,9 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
-        System.out.println(username);
         boolean success = userService.login(username,password);
         if (success) {
+            System.out.println("Login Success  ID : "+username);
             if (username.equals("admin")){
                 return ResponseEntity.ok().body("admin");
             }

@@ -17,37 +17,10 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-//    public User getUserById(Long userId) {
-//        return userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-//    }
-//
-//    public User createUser(User user) {
-//        return userRepository.save(user);
-//    }
-//
-//    public User updateUser(Long userId, User user) {
-//        User existingUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-//
-//        existingUser.setName(user.getUsername());
-//        existingUser.setPassword(user.getPassword());
-//        existingUser.setName(user.getName());
-//
-//        return userRepository.save(existingUser);
-//    }
-
-//    public void deleteUser(Long userId) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-//
-//        userRepository.delete(user);
-//    }
 
 
     public boolean login(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
-        System.out.println(user.get().getUsername());
         if (user.isPresent() && user.get().getPassword().equals(password)) {
             return true;  //로그인 성공
         } else {
@@ -65,8 +38,8 @@ public class UserService {
 
     public Boolean validateDuplicateUser(String username) {  ///중복회원검증
         Optional<User> user1 = userRepository.findByUsername(username);
-        System.out.println(user1.isPresent());
         if(user1.isPresent()){
+            System.out.println("중복");
             return true;  // 중복
         } else {
             return false; // 중복X

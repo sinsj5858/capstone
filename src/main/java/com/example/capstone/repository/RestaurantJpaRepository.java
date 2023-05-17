@@ -3,6 +3,7 @@ package com.example.capstone.repository;
 import com.example.capstone.domain.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RestaurantJpaRepository extends JpaRepository<Restaurant, Long>,RestaurantRepository{
@@ -16,4 +17,8 @@ public interface RestaurantJpaRepository extends JpaRepository<Restaurant, Long>
     Optional<Restaurant> findByRestaurantLocation(String restaurantLocation);
     @Override
     Optional<Restaurant> findByRestaurantOperatingTime(String operatingTime);
+    @Override
+    Optional<Restaurant> findByRestaurantCategory(String restaurantCategory);
+    @Override
+    List<Restaurant> findByRestaurantNameContaining(String restaurantName);
 }

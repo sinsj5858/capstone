@@ -3,10 +3,11 @@ package com.example.capstone.domain;
 import java.util.List;
 
 // Retrofit을 통해 가져올 데이터 (이미지 제외 이미지는 따로 처리)
-public class RestaurantRequest {
+public class GetRestaurant {
     private String restaurantName;   // 식당이름 정보
     private String restaurantLocation;// 식당 위치 정보
     private String restaurantOperatingTime; // 운영시간 정보
+    private String restaurantCategory;   // 카테고리
     private List<GetMenu> menuList; // 추가할메뉴리스트 저장시 위에 값들만 저장
 
     public String getRestaurantName() {
@@ -31,6 +32,14 @@ public class RestaurantRequest {
 
     public void setRestaurantOperatingTime(String restaurantOperatingTime) {
         this.restaurantOperatingTime = restaurantOperatingTime;
+    }
+
+    public String getRestaurantCategory() {
+        return restaurantCategory;
+    }
+
+    public void setRestaurantCategory(String restaurantCategory) {
+        this.restaurantCategory = restaurantCategory;
     }
     public List<GetMenu> getMenuList() {
         return menuList;
